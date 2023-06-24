@@ -3,6 +3,8 @@ const express = require('express')
 const { engine } = require('express-handlebars')
 const app = express()
 const port = 3000
+//載入json資料
+const restaurants = require('./public/jsons/restaurant.json').results
 
 //設定副檔名可以使用.hbs
 app.engine('.hbs', engine({ extname: '.hbs' }));
@@ -19,7 +21,7 @@ app.get('/', (req, res) => {
 
 //顯示全部的餐廳
 app.get('/restaurants', (req, res) => {
-  res.render('index')
+  res.render('index', {restaurants})
 })
 
 //顯示單個餐廳的資料
