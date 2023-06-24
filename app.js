@@ -21,7 +21,22 @@ app.get('/', (req, res) => {
 
 //顯示全部的餐廳
 app.get('/restaurants', (req, res) => {
-  res.render('index', {restaurants})
+  //設定search bar 輸入的 keyword
+  const keyword = req.query.keyword?.trim()
+  //如果沒有keyword直接輸入restaurants
+  //用filter找符合條件的陣列元素
+  const matchedRestaurants = keyword ? restaurants.filter((rest) => 
+  //Object.values輸出全部的property
+    Object.values(rest).some((property) => {
+      //判斷property是否為string
+      if (typeof property === 'string') {
+        //找出包含keyword的元素
+        return property.toLowerCase().includes(keyword.toLowerCase())
+      }
+      return false
+    })
+  ) : restaurants
+  res.render('index', { restaurants : matchedRestaurants, keyword })
 })
 
 //顯示單個餐廳的資料
