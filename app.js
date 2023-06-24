@@ -27,7 +27,8 @@ app.get('/restaurants', (req, res) => {
 //顯示單個餐廳的資料
 app.get('/restaurant/:id', (req, res) => {
   const id = req.params.id
-  res.send(`read restaurant id: ${id}`)
+  const restaurant = restaurants.find((restaurant) => restaurant.id.toString() === id)
+  res.render('show', { restaurant })
 })
 
 //啟動監聽
